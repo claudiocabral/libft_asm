@@ -13,8 +13,6 @@ OBJS := objs/ft_isalpha.o\
 TESTS :=	run_test_isalpha\
 		run_test_isdigit
 
-#OBJS_TEST := objs/tests/isalpha.o\
-
 .PHONY: all clean fclean re
 
 all: $(NAME) $(TESTS)
@@ -22,12 +20,12 @@ all: $(NAME) $(TESTS)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
-run_test_%: test_%
-	./tests/test_isalpha
+run_test_%: tests/test_%
+	./$<
 
-test_%: $(NAME) objs/%.o
+tests/test_%: objs/tests/%.o $(NAME)
 	@[[ -d tests ]] || mkdir -p tests
-	cc objs/$@.o -L. -lfts -o tests/alpha_test
+	cc -L. -lfts $< -o $@
 
 objs/%.o: srcs/%.s
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
