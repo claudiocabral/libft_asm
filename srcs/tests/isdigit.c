@@ -3,18 +3,18 @@
 
 void print_result(int c)
 {
-    if (ft_isalpha(c))
-        printf("%c is alpha\n", c);
+    if (ft_isdigit(c))
+        printf("%c is digit\n", c);
     else
-        printf("%c is NOT alpha\n", c);
+        printf("%c is NOT digit\n", c);
 }
 
 int main(void)
 {
     int i;
 
-    i = 0;
-    while (i < 127) {
+    i = 32;
+    while (i < 100) {
         print_result(i);
         ++i;
     }
