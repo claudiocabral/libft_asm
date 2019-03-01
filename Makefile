@@ -13,7 +13,9 @@ OBJS := objs/ft_isalpha.o\
 TESTS :=	run_test_isalpha\
 		run_test_isdigit
 
-.PHONY: all clean fclean re run_test_%
+.PHONY: all clean fclean re
+
+.PRECIOUS: %.o
 
 all: $(NAME) $(TESTS)
 
