@@ -1,4 +1,5 @@
 section .text
+    global ft_isdigit
 
 ft_isdigit:
     cmp rdi, 0x30

@@ -13,7 +13,7 @@ OBJS := objs/ft_isalpha.o\
 TESTS :=	run_test_isalpha\
 		run_test_isdigit
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run_test_%
 
 all: $(NAME) $(TESTS)
 
@@ -25,7 +25,7 @@ run_test_%: tests/test_%
 
 tests/test_%: objs/tests/%.o $(NAME)
 	@[[ -d tests ]] || mkdir -p tests
-	cc -L. -lfts $< -o $@
+	cc $< -L. -lfts -o $@
 
 objs/%.o: srcs/%.s
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
