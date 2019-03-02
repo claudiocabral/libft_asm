@@ -15,27 +15,21 @@ TESTS :=	run_test_isalpha\
 
 .PHONY: all clean fclean re
 
-.PRECIOUS: %.o
-
-all: $(NAME) $(TESTS)
+all: $(NAME) run_test
 
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
-run_test_%: tests/test_%
+run_test: test
 	./$<
 
-tests/test_%: objs/tests/%.o $(NAME)
-	@[[ -d tests ]] || mkdir -p tests
-	cc $< -L. -lfts -o $@
 
 objs/%.o: srcs/%.s
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
 	$(ASM) -f$(ARCH) $< -o $@
 
-objs/%.o: srcs/%.c
-	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
-	gcc -c $< -o $@ -Iincludes
+test: srcs/tests/test.d $(NAME)
+	dmd  $(NAME) $< -of=$@
 
 clean:
 ifeq ($(shell [ -e objs ] && echo 1 || echo 0),1)

@@ -7,17 +7,17 @@ _ft_isalpha:
     ret
 
 ft_isalpha:
-.isupper: cmp rdi, 0x41
+.isupper: cmp edi, 0x41
     js .not_equal
-    cmp rdi, 0x5a
+    cmp edi, 0x5a
     jg .islower
-    mov rax, 0x1
+    mov ax, 0x400
     ret
-.islower: cmp rdi, 0x61
+.islower: cmp edi, 0x61
     js .not_equal
-    cmp rdi, 0x7a
+    cmp edi, 0x7a
     jg .not_equal
-    mov rax, 0x1
+    mov ax, 0x400
     ret
-.not_equal: mov rax, 0x0
+.not_equal: mov ax, 0x0
     ret
