@@ -18,16 +18,21 @@ extern (C) {
     int ft_puts(const char *s);
 }
 
-void compare_impl(alias F, alias G, args...)(string msg)
+int not_zero(int a, int b)
+{
+    return (a == 0) == (b == 0);
+}
+
+void same_output_impl(alias F, alias G, alias C = (a, b) => a == b, args...)(string msg)
 {
     assert(F(args) == G(args), msg);
 }
 
-void compare(alias func, string msg, args...)(){
+void same_output(alias func, alias compare, string msg, args...)(){
     enum name = __traits(identifier, func)[3 .. $];
     alias other_func = __traits(getMember, test, name);
     string error_msg = name ~ " with args " ~ args.to!string ~ ": " ~ msg;
-    compare_impl!(func, other_func, args)(error_msg);
+    same_output_impl!(func, other_func, compare,args)(error_msg);
 }
 
 
@@ -38,7 +43,7 @@ void main() {
             );
     foreach (f; functions) {
         foreach (i; 0 .. 127) {
-            compare!(mixin(f), "results don't match", i)();
+            same_output!(mixin(f), not_zero, "results don't match", i)();
         }
         writeln(f ~ " passed all tests");
     }
