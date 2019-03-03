@@ -23,7 +23,7 @@ int not_zero(int a, int b) {
     return (a == 0) == (b == 0);
 }
 
-void same_output_impl(alias F, alias G, alias C = (a, b) => a == b, args...)(string msg) {
+void compare_output_impl(alias F, alias G, alias C = (a, b) => a == b, args...)(string msg) {
     auto mine = F(args);
     auto original = G(args);
     auto results =
@@ -32,24 +32,33 @@ void same_output_impl(alias F, alias G, alias C = (a, b) => a == b, args...)(str
     assert(C(mine, original), msg ~ results);
 }
 
-void same_output(alias func, alias compare, string msg, args...)() {
+void compare_output(alias func, alias compare, string msg, args...)() {
     enum name = __traits(identifier, func)[3 .. $];
     alias other_func = __traits(getMember, test, name);
     string error_msg = name ~ " with args " ~ args.to!string ~ ": " ~ msg;
-    same_output_impl!(func, other_func, compare,args)(error_msg);
+    compare_output_impl!(func, other_func, compare,args)(error_msg);
 }
 
 void main() {
-    alias functions = AliasSeq!(
+    alias is_functions = AliasSeq!(
             "ft_isalpha",
             "ft_isalnum",
             "ft_isdigit",
             "ft_isprint",
             "ft_isascii"
             );
-    foreach (f; functions) {
+    foreach (f; is_functions) {
         foreach (i; ubyte.min .. ubyte.max) {
-            same_output!(mixin(f), not_zero, "results don't match", i)();
+            compare_output!(mixin(f), not_zero, "results don't match", i)();
+        }
+        writeln(f ~ " passed all tests");
+    }
+    alias to_functions = AliasSeq!(
+            "ft_toupper",
+            );
+    foreach (f; to_functions) {
+        foreach (i; ubyte.min .. ubyte.max) {
+            compare_output!(mixin(f), (a, b) => (a == b), "results don't match", i)();
         }
         writeln(f ~ " passed all tests");
     }
