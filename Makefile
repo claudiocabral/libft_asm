@@ -8,12 +8,13 @@ else
 endif
 
 OBJS := objs/ft_isalpha.o\
+		objs/ft_isalnum.o\
 		objs/ft_isdigit.o\
-		objs/ft_isprint.o\
-		objs/ft_isalnum.o
+		objs/ft_isascii.o\
+		objs/ft_isprint.o
 
-TESTS :=	run_test_isalpha\
-		run_test_isdigit
+TEST_SOURCES :=	srcs/tests/test.d \
+			 	srcs/tests/bsd_functions.d
 
 .PHONY: all clean fclean re
 
@@ -30,8 +31,8 @@ objs/%.o: srcs/%.s
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
 	$(ASM) -f$(ARCH) $< -o $@
 
-test: srcs/tests/test.d $(NAME)
-	dmd  $(NAME) $< -of=$@
+test: $(TEST_SOURCES) $(NAME)
+	dmd  -Isrcs/tests $^ -of=$@
 
 clean:
 ifeq ($(shell [ -e objs ] && echo 1 || echo 0),1)

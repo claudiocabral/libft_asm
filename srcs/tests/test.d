@@ -4,6 +4,7 @@ import std.stdio: writeln;
 import std.conv: to;
 import core.stdc.ctype;
 import std.meta: AliasSeq;
+import bsd_functions;
 
 extern (C) {
     int ft_bzero(void *s, size_t n);
@@ -43,7 +44,8 @@ void main() {
             "ft_isalpha",
             "ft_isalnum",
             "ft_isdigit",
-            "ft_isprint"
+            "ft_isprint",
+            "ft_isascii"
             );
     foreach (f; functions) {
         foreach (i; ubyte.min .. ubyte.max) {
