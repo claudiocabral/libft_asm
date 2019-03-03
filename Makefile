@@ -12,7 +12,10 @@ OBJS := objs/ft_isalpha.o\
 		objs/ft_isdigit.o\
 		objs/ft_isascii.o\
 		objs/ft_isprint.o\
-		objs/ft_toupper.o
+		objs/ft_tolower.o\
+		objs/ft_toupper.o\
+		objs/ft_puts.o\
+		objs/ft_strlen.o
 
 TEST_SOURCES :=	srcs/tests/test.d \
 			 	srcs/tests/bsd_functions.d

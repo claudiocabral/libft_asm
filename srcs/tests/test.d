@@ -2,7 +2,9 @@ module test;
 
 import std.stdio: writeln;
 import std.conv: to;
+import std.string: toStringz;
 import core.stdc.ctype;
+import core.stdc.string;
 import std.meta: AliasSeq;
 import bsd_functions;
 
@@ -17,6 +19,7 @@ extern (C) {
     int ft_toupper(int c);
     int ft_tolower(int c);
     int ft_puts(const char *s);
+    ulong ft_strlen(const char *s);
 }
 
 int not_zero(int a, int b) {
@@ -55,6 +58,7 @@ void main() {
     }
     alias to_functions = AliasSeq!(
             "ft_toupper",
+            "ft_tolower",
             );
     foreach (f; to_functions) {
         foreach (i; ubyte.min .. ubyte.max) {
@@ -62,4 +66,18 @@ void main() {
         }
         writeln(f ~ " passed all tests");
     }
+    alias strings = AliasSeq!(
+        "asdf\0",
+        "asdfasfa\0",
+        "aksjflkasjflajflajfaj\0",
+        ""
+        );
+    foreach (alias s; strings) {
+        compare_output!(ft_strlen,
+                 (a, b) => (a == b),
+                 "results don't match",
+                 s.ptr
+                 )();
+    }
+    writeln("ft_strlen passed all tests");
 }
