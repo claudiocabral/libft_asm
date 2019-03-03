@@ -25,7 +25,7 @@ int not_zero(int a, int b)
 
 void same_output_impl(alias F, alias G, alias C = (a, b) => a == b, args...)(string msg)
 {
-    assert(F(args) == G(args), msg);
+    assert(C(F(args), G(args)), msg);
 }
 
 void same_output(alias func, alias compare, string msg, args...)(){
@@ -39,6 +39,7 @@ void same_output(alias func, alias compare, string msg, args...)(){
 void main() {
     alias functions = AliasSeq!(
             "ft_isalpha",
+            "ft_isalnum",
             "ft_isdigit"
             );
     foreach (f; functions) {

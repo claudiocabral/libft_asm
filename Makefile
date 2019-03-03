@@ -8,7 +8,8 @@ else
 endif
 
 OBJS := objs/ft_isalpha.o\
-	objs/ft_isdigit.o
+		objs/ft_isdigit.o\
+		objs/ft_isalnum.o
 
 TESTS :=	run_test_isalpha\
 		run_test_isdigit
