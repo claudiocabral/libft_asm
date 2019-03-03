@@ -9,6 +9,7 @@ endif
 
 OBJS := objs/ft_isalpha.o\
 		objs/ft_isdigit.o\
+		objs/ft_isprint.o\
 		objs/ft_isalnum.o
 
 TESTS :=	run_test_isalpha\
