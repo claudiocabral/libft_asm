@@ -8,6 +8,9 @@ import core.stdc.string;
 import core.stdc.stdlib;
 import std.meta: AliasSeq;
 import bsd_functions;
+import core.sys.posix.unistd;
+import core.sys.posix.fcntl;
+
 extern (C) {
     int ft_bzero(void *s, size_t n);
     char *ft_strcat(char *dest, const char *src);
@@ -23,10 +26,14 @@ extern (C) {
     void *ft_memcpy(const void *dst, const void *src, size_t size);
     void *ft_memset(const void *a, int c, size_t size);
     char *ft_strdup(const char *src);
+    void ft_cat(int fd);
 }
 
-
-
+void test_cat() {
+    auto fd = open("srcs/ft_cat.s", O_RDONLY);
+    ft_cat(fd);
+    close(fd);
+}
 
 void test_memory_functions() {
     char[1024] my_buffer;
@@ -123,4 +130,5 @@ void main() {
     }
     writeln("ft_strlen passed all tests");
     test_memory_functions();
+    test_cat();
 }
