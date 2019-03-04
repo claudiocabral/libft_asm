@@ -7,7 +7,6 @@ import core.stdc.ctype;
 import core.stdc.string;
 import std.meta: AliasSeq;
 import bsd_functions;
-
 extern (C) {
     int ft_bzero(void *s, size_t n);
     char *ft_strcat(char *dest, const char *src);
@@ -20,6 +19,37 @@ extern (C) {
     int ft_tolower(int c);
     int ft_puts(const char *s);
     ulong ft_strlen(const char *s);
+    void *ft_memcpy(const void *dst, const void *src, size_t size);
+    void *ft_memset(const void *a, int c, size_t size);
+}
+
+
+
+
+void test_memory_functions() {
+    char[1024] my_buffer;
+    char[1024] other_buffer;
+    alias strings = AliasSeq!(
+            "asdf",
+            "asdfasfa",
+            "aksjflkasjflajflajfaj",
+            ""
+            );
+
+    foreach (s; strings) {
+        auto my_res = ft_memcpy(cast(void *)my_buffer.ptr, cast(void *)s.ptr, s.length);
+        memcpy(cast(void *)other_buffer.ptr, cast(void *)s.ptr, s.length);
+        assert(my_buffer == other_buffer, "my buffer: " ~ my_buffer ~ "\noriginal: " ~ other_buffer);
+        assert(my_res == my_buffer.ptr, "return values don't match");
+    }
+    writeln("ft_memcpy passed all tests");
+    foreach (i; [ 0, 1, 2, 3, 4, 5 ]) {
+        auto my_res = ft_memset(cast(void *)my_buffer.ptr, i, my_buffer.length);
+        memset(cast(void *)other_buffer.ptr, i, other_buffer.length);
+        assert(my_buffer == other_buffer, "my buffer: " ~ my_buffer ~ "\noriginal: " ~ other_buffer);
+        assert(my_res == my_buffer.ptr, "return values don't match");
+    }
+    writeln("ft_memset passed all tests");
 }
 
 int not_zero(int a, int b) {
@@ -67,17 +97,16 @@ void main() {
         writeln(f ~ " passed all tests");
     }
     alias strings = AliasSeq!(
-        "asdf\0",
-        "asdfasfa\0",
-        "aksjflkasjflajflajfaj\0",
-        ""
-        );
+            "asdf\0",
+            "asdfasfa\0",
+            "aksjflkasjflajflajfaj\0",
+            ""
+            );
+
     foreach (alias s; strings) {
-        compare_output!(ft_strlen,
-                 (a, b) => (a == b),
-                 "results don't match",
-                 s.ptr
-                 )();
+        compare_output!(ft_strlen, (a, b) => (a == b),
+                "results don't match", s.ptr)();
     }
     writeln("ft_strlen passed all tests");
+    test_memory_functions();
 }

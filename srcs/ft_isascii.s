@@ -1,7 +1,7 @@
 section .text
-global ft_isascii
+global _ft_isascii
 
-ft_isascii:
+_ft_isascii:
     cmp edi, 0x0
     js .not_equal
     cmp edi, 0x7f

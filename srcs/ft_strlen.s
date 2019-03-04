@@ -1,13 +1,13 @@
 section .text
-global ft_strlen
+global _ft_strlen
 
-ft_strlen:
+_ft_strlen:
     mov rax, 0
-.loop:
-    cmp byte [rdi], 0
-    je .end
-    inc rax
-    inc rdi
-    jmp .loop
-.end:
+    mov rsi, rdi
+    mov rcx, -1
+    cld
+    repne scasb
+    dec rdi
+    sub rdi, rsi
+    mov rax, rdi
     ret

@@ -1,5 +1,9 @@
 section .text
-global ft_bzero
+global _ft_bzero
+extern _ft_memset
 
-ft_bzero:
+_ft_bzero:
+    mov rdx, rsi
+    mov rsi, 0
+    call _ft_memset
     ret

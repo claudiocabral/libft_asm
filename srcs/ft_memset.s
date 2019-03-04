@@ -1,12 +1,11 @@
-section .text:
-global ft_memset
+section .text
+global _ft_memset
 
-ft_memset:
-.loop:
-    mov rax, rdi
-    cmp rdx, 0
-    je .end
-    mov byte[rdi], rsi
-
-.end:
+_ft_memset:
+    mov rax, rsi
+    mov rsi, rdi
+    mov rcx, rdx
+    cld
+    rep stosb
+    mov rax, rsi
     ret

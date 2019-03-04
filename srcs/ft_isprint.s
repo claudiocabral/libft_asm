@@ -1,7 +1,7 @@
 section .text
-global ft_isprint
+global _ft_isprint
 
-ft_isprint:
+_ft_isprint:
     cmp edi, 0x20
     js .not_equal
     cmp edi, 0x7e

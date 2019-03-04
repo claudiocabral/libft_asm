@@ -1,9 +1,9 @@
 section .text
-global ft_toupper
-extern ft_islower
+global _ft_toupper
+extern _ft_islower
 
-ft_toupper:
-    call ft_islower
+_ft_toupper:
+    call _ft_islower
     cmp eax, 0
     mov eax, edi
     je .end

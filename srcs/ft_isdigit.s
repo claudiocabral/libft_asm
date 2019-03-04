@@ -1,7 +1,7 @@
 section .text
-    global ft_isdigit
+global _ft_isdigit
 
-ft_isdigit:
+_ft_isdigit:
     cmp rdi, 0x30
     js .not_equal
     cmp rdi, 0x39
