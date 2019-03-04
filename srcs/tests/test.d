@@ -5,6 +5,7 @@ import std.conv: to;
 import std.string: toStringz;
 import core.stdc.ctype;
 import core.stdc.string;
+import core.stdc.stdlib;
 import std.meta: AliasSeq;
 import bsd_functions;
 extern (C) {
@@ -21,6 +22,7 @@ extern (C) {
     ulong ft_strlen(const char *s);
     void *ft_memcpy(const void *dst, const void *src, size_t size);
     void *ft_memset(const void *a, int c, size_t size);
+    char *ft_strdup(const char *src);
 }
 
 
@@ -50,6 +52,18 @@ void test_memory_functions() {
         assert(my_res == my_buffer.ptr, "return values don't match");
     }
     writeln("ft_memset passed all tests");
+    my_buffer = "abc\0";
+    auto suffix = "defef\0";
+    other_buffer = my_buffer;
+    strcat(other_buffer.ptr, suffix.ptr);
+    ft_strcat(my_buffer.ptr, suffix.ptr);
+    assert(my_buffer == other_buffer, "my buffer: " ~ my_buffer ~ "\noriginal: " ~ other_buffer);
+    writeln("ft_strcat passed all tests");
+    other_buffer = "huahuahuahua\0";
+    auto ptr = ft_strdup(other_buffer.ptr);
+    assert(strcmp(ptr, other_buffer.ptr) == 0, "fail");
+    free(ptr);
+    writeln("ft_strdup passed all tests");
 }
 
 int not_zero(int a, int b) {
