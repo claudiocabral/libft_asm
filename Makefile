@@ -26,11 +26,13 @@ OBJS := objs/ft_isalpha.o\
 		objs/ft_strlen.o\
 		objs/ft_cat.o
 
-TEST_SOURCES :=	srcs/tests/test.d \
-		srcs/tests/bsd_functions.d\
-		srcs/tests/compare.d\
-		srcs/tests/strlen.d\
-		srcs/tests/memory.d
+TEST_OBJS :=	objs/tests/test.o \
+		objs/tests/bsd_functions.o\
+		objs/tests/compare.o\
+		objs/tests/strlen.o\
+		objs/tests/memory.o\
+		objs/tests/cat.o\
+		objs/tests/puts_test.o
 
 .PHONY: all clean fclean re
 
@@ -42,13 +44,16 @@ $(NAME): $(OBJS)
 run_test: test
 	./$<
 
-
 objs/%.o: srcs/%.s
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
 	$(ASM) -f$(ARCH) $< -o $@
 
-test: $(TEST_SOURCES) $(NAME)
-	dmd $(DFLAGS)  -Isrcs/tests $^ -of=$@
+objs/%.o: srcs/%.d
+	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
+	dmd -c $(DFLAGS) -Isrcs/tests $< -of=$@
+
+test: $(TEST_OBJS) $(NAME)
+	dmd $(DFLAGS)  $^ -of=$@
 
 clean:
 ifeq ($(shell [ -e objs ] && echo 1 || echo 0),1)
