@@ -4,6 +4,8 @@ extern _ft_strlen
 extern _malloc
 
 _ft_strdup:
+    cmp rdi, 0
+    je .error
     push rbp
     mov rbp, rsp
     sub rsp, 16
@@ -21,4 +23,7 @@ _ft_strdup:
     rep movsb
 .finalize:
     leave
+    ret
+.error:
+    xor rax, rax
     ret

@@ -2,7 +2,9 @@ section .text
 global _ft_strlen
 
 _ft_strlen:
-    mov rax, 0
+    xor rax, rax
+    cmp rdi, 0
+    je .end
     mov rcx, -1
     mov rsi, rdi
     cld
@@ -10,4 +12,5 @@ _ft_strlen:
     dec rdi
     sub rdi, rsi
     mov rax, rdi
+.end:
     ret

@@ -7,6 +7,10 @@ else
 	ARCH := macho64
 endif
 
+ifeq ($(DEBUG), 1)
+    DFLAGS := -debug
+endif
+
 OBJS := objs/ft_isalpha.o\
 		objs/ft_isalnum.o\
 		objs/ft_isdigit.o\
@@ -23,7 +27,10 @@ OBJS := objs/ft_isalpha.o\
 		objs/ft_cat.o
 
 TEST_SOURCES :=	srcs/tests/test.d \
-			 	srcs/tests/bsd_functions.d
+		srcs/tests/bsd_functions.d\
+		srcs/tests/compare.d\
+		srcs/tests/strlen.d\
+		srcs/tests/memory.d
 
 .PHONY: all clean fclean re
 
@@ -41,7 +48,7 @@ objs/%.o: srcs/%.s
 	$(ASM) -f$(ARCH) $< -o $@
 
 test: $(TEST_SOURCES) $(NAME)
-	dmd  -Isrcs/tests $^ -of=$@
+	dmd $(DFLAGS)  -Isrcs/tests $^ -of=$@
 
 clean:
 ifeq ($(shell [ -e objs ] && echo 1 || echo 0),1)
