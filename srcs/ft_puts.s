@@ -21,14 +21,15 @@ _ft_puts:
     leave
     ret
 .body:
+    mov rdx, rdi
     call _ft_strlen
-    mov rsi, rdi
+    mov rsi, rdx
     mov rdi, STDOUT
     mov rdx, rax
     mov rax, MACH_SYSCALL(WRITE)
     syscall
     mov rdi, STDOUT
-    mov rsi, [rel newline.string + 0x6]
+    lea rsi, [rel newline.string + 0x6]
     mov rdx, 0x1
     mov rax, MACH_SYSCALL(WRITE)
     syscall

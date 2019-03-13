@@ -19,6 +19,10 @@ _ft_cat:
     mov rdx, BUFF_SIZE
     mov rax, MACH_SYSCALL(READ)
     syscall
+    jae .continue
+    leave
+    ret
+.continue:
     cmp rax, 0
     jle .finalize
     mov rdi, STDOUT

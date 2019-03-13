@@ -3,24 +3,13 @@ module test;
 import std.stdio: writeln;
 import std.string: toStringz;
 import std.meta: AliasSeq;
-import core.sys.posix.fcntl;
 import core.sys.posix.unistd;
 import compare;
 import strlen;
 import memory;
+import cat;
+import puts_test;
 
-
-void test_cat() {
-    auto paths = [
-        "srcs/ft_strcat.s\0",
-        "/dev/stdin\0",
-        ];
-    foreach (path; paths) {
-    auto fd = open(path.ptr, O_RDONLY);
-    ft_cat(fd);
-    close(fd);
-    }
-}
 
 int not_zero(int a, int b) {
     return (a == 0) == (b == 0);
@@ -52,5 +41,6 @@ void main() {
     }
     test_strlen();
     test_memory_functions();
-    // test_cat();
+    test_cat();
+    test_puts();
 }

@@ -23,7 +23,7 @@ extern (C) {
             enforce(my_res == my_buffer.ptr, "return values don't match");
         }
         writeln("ft_memcpy passed all tests");
-        foreach (i; [ 0, 1, 2, 3, 4, 5 ]) {
+        foreach (i; ubyte.min .. ushort.max) {
             auto my_res = ft_memset(cast(void *)my_buffer.ptr, i, my_buffer.length);
             memset(cast(void *)other_buffer.ptr, i, other_buffer.length);
             enforce(my_buffer == other_buffer, "my buffer: " ~ my_buffer ~ "\noriginal: " ~ other_buffer);
@@ -39,7 +39,8 @@ extern (C) {
         writeln("ft_strcat passed all tests");
         other_buffer = "huahuahuahua\0";
         auto ptr = ft_strdup(other_buffer.ptr);
-        enforce(strcmp(ptr, other_buffer.ptr) == 0, "fail");
+        enforce(ptr, "ft_strdup did not allocate a pointer");
+        enforce(strcmp(ptr, other_buffer.ptr) == 0, "ft_strdup failed to copy contents");
         free(ptr);
         ptr = ft_strdup(null);
         enforce(ptr == null, "ptr not null with ft_strdup(null)");
