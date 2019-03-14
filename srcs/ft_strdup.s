@@ -11,6 +11,7 @@ _ft_strdup:
     sub rsp, 16
     mov [rsp], rdi
     call _ft_strlen
+    inc rax
     mov [rsp + 8], rax
     mov rdi, rax
     call _malloc

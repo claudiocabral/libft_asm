@@ -40,7 +40,10 @@ extern (C) {
         other_buffer = "huahuahuahua\0";
         auto ptr = ft_strdup(other_buffer.ptr);
         enforce(ptr, "ft_strdup did not allocate a pointer");
-        enforce(strcmp(ptr, other_buffer.ptr) == 0, "ft_strdup failed to copy contents");
+        enforce(strcmp(ptr, other_buffer.ptr) == 0, "ft_strdup failed to copy contents\n"
+                ~ "should be: " ~ other_buffer[0 .. 12]
+                ~ "\nis: " ~ ptr.to!string
+                );
         free(ptr);
         ptr = ft_strdup(null);
         enforce(ptr == null, "ptr not null with ft_strdup(null)");

@@ -29,6 +29,7 @@ OBJS := objs/ft_isalpha.o\
 TEST_OBJS :=	objs/tests/test.o \
 		objs/tests/bsd_functions.o\
 		objs/tests/compare.o\
+		objs/tests/capture_stdout.o\
 		objs/tests/strlen.o\
 		objs/tests/memory.o\
 		objs/tests/cat.o\
@@ -52,7 +53,7 @@ objs/%.o: srcs/%.d
 	@[[ -d $(dir $@ ) ]] || mkdir -p $(dir $@)
 	dmd -c $(DFLAGS) -Isrcs/tests $< -of=$@
 
-test: $(TEST_OBJS) $(NAME)
+test: $(NAME) $(TEST_OBJS)
 	dmd $(DFLAGS)  $^ -of=$@
 
 clean:

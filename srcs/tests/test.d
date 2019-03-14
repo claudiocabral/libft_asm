@@ -9,6 +9,8 @@ import strlen;
 import memory;
 import cat;
 import puts_test;
+import capture_stdout;
+import core.stdc.stdio: puts;
 
 
 int not_zero(int a, int b) {
