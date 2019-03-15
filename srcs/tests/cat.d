@@ -11,15 +11,15 @@ void test_cat()
     auto paths = [
         "srcs/ft_strcat.s\0",
         "Makefile\0",
-        //"/dev/stdin\0",
     ];
     foreach (path; paths) {
         compare_stdout!(cat_read_file, read_file, path)();
     }
-    //char[1024] buf;
-    //auto ret = core.read(13, buf.ptr, buf.length);
-    //ret.to!string.writeln;
-    //ft_cat(13);
+    auto fd = open("/dev/stdin\0", O_RDONLY);
+    if (fd) {
+        ft_cat(fd);
+    }
+    close(fd);
     writeln("ft_cat passed all tests!");
 }
 
